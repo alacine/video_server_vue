@@ -1,5 +1,5 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <a href="https://github.com/alacine/video_server_vue">本站项目地址</a>
   </div>
 </template>
