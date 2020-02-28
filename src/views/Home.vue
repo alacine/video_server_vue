@@ -1,21 +1,25 @@
 <template>
   <div class="home">
-    <div class="">
-      <el-row :gutter="20">
-        <el-col :span="4" v-for="video in videos" :key="video.id">
-          <el-card class="video-cards">
-            <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png">
-            <div style="padding: 14px;">
-              <span>{{video.title}}</span>
-              <div class="bottom clearfix">
-                <span class="description">{{video.name}}</span>
-                <span class="description">{{video.description}}</span>
-              </div>
+    <el-row :gutter="20">
+      <el-col :span="4" v-for="video in videos" :key="video.id">
+        <el-card class="video-cards" @click.native="playVideo(video)">
+          <div>
+            <!-- <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"> -->
+          </div>
+          <div class="video-info">
+            <div>
+              <span class="video-title">{{video.title.substring(0,10)}}</span>
             </div>
-          </el-card>
-        </el-col>
-      </el-row>
-    </div>
+            <div class="bottom clearfix">
+              <span class="video-author_name">{{video.author_name.substring(0,10)}}</span>
+            </div>
+            <div class="bottom clearfix">
+              <span class="video-description">{{video.description}}</span>
+            </div>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -41,22 +45,37 @@ export default {
           type: 'warning'
         })
       })
+    },
+    playVideo (video) {
+      this.$router.push({
+        name: 'playVideo',
+        params: {
+          vid: video.id
+        }
+      })
     }
   },
   components: {
   },
   beforeMount () {
     this.load()
-    var currentDate = new Date()
-    console.log(currentDate)
   }
 }
 </script>
 
 <style type="text/css">
-.description {
+.video-title{
+  font-size: 15px;
+}
+
+.video-author_name {
   font-size: 13px;
-  color: #999;
+  color: #909399;
+}
+
+.video-description {
+  font-size: 13px;
+  color: #606266;
 }
 
 .bottom {
@@ -76,12 +95,12 @@ export default {
 
 .clearfix:before,
 .clearfix:after {
-    display: table;
-    content: "";
+  display: table;
+  content: "";
 }
 
 .clearfix:after {
-    clear: both
+  clear: both
 }
 
 .video-cards {

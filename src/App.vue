@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <NavMenu></NavMenu>
-    <router-view></router-view>
+    <div class="main-body">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -18,4 +20,9 @@ export default {
 </script>
 
 <style>
+.main-body {
+  width: 1300px;
+  min-height: 600px;
+  margin: 0 auto;
+}
 </style>

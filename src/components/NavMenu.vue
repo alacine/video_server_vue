@@ -2,8 +2,8 @@
   <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" router>
     <el-menu-item index="/">首页</el-menu-item>
     <el-menu-item index="/upload">投稿</el-menu-item>
-    <el-menu-item index="/about">关于我们</el-menu-item>
     <el-menu-item index="/login">登录</el-menu-item>
+    <el-menu-item index="/about">关于本站</el-menu-item>
   </el-menu>
 </template>
 

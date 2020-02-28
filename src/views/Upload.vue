@@ -25,6 +25,7 @@ export default {
       form: {
         title: '',
         description: '',
+        // TODO
         author_id: 1
       }
     }
