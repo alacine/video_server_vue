@@ -1,8 +1,8 @@
 <template>
-  <div class="login">
+  <div class="register">
     <div class="main-contianer">
-      <div class="login-card">
-        <div class="title">登录：</div>
+      <div class="register-card">
+        <div class="title">注册：</div>
         <el-form ref="form" :model="form" label-width="80px">
           <el-form-item label="账号" :rules="[{ required: true, message: '账号不能为空'},]">
             <el-input v-model="form.user_name"></el-input>
@@ -10,9 +10,11 @@
           <el-form-item label="密码" :rules="[{ required: true, message: '密码不能为空'},]">
             <el-input type="password" v-model="form.pwd"></el-input>
           </el-form-item>
+          <el-form-item label="确认密码" :rules="[{ required: true, message: '密码不能为空'},]">
+            <el-input type="password" v-model="form.pwd_confirm"></el-input>
+          </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">登录</el-button>
-            <el-button @click.native="onRegister">注册</el-button>
+            <el-button type="primary" @click="onSubmit">注册</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -20,44 +22,50 @@
   </div>
 </template>
 
-<!-- <script src="http://static.geetest.com/static/tools/gt.js"></script> -->
 <script>
 import * as API from '@/api/login'
 export default {
-  name: 'Login',
+  name: 'Register',
   data () {
     return {
       form: {
         user_name: '',
-        pwd: ''
+        pwd: '',
+        pwd_confirm: ''
       }
     }
   },
   methods: {
     onSubmit () {
-      console.log(this.form)
-      API.login(this.form).then((res) => {
+      if (this.form.pwd !== this.form.pwd_confirm) {
         this.$notify({
-          title: '登录成功',
-          message: 'success',
-          type: 'success'
+          title: '注册失败',
+          message: '两次密码输入不一致',
+          type: 'warning'
         })
-        this.$cookies.set('X-Session-Id', res.session_id, 30)
-        this.$cookies.set('X-User-Name', this.form.user_name, 30)
-        // 跳转首页
-        this.$router.push({
-          name: 'Home'
-        })
-      }).catch((res) => {
+        return
+      }
+      API.register(this.form).then((res) => {
+        if (res.status > 0) {
+          this.$notify.error({
+            title: '注册失败',
+            message: res.msg
+          })
+        } else {
+          this.$notify({
+            title: '注册成功',
+            message: 'success',
+            type: 'success'
+          })
+          this.$router.push({
+            name: 'Login'
+          })
+        }
+      }).catch((error) => {
         this.$notify.error({
-          title: '登录失败',
-          message: `Code: ${res.response.data.error_code}; ${res.response.data.error}`
+          title: '注册失败',
+          message: error
         })
-      })
-    },
-    onRegister () {
-      this.$router.push({
-        name: 'Register'
       })
     }
   },
@@ -68,14 +76,14 @@ export default {
 </script>
 
 <style>
-.title{
+.title {
   font-family: Microsoft Yahei;
   font-weight: 500;
   font-size: 30px;
   padding: 20px;
 }
 
-.login-card{
+.register-card{
   margin: 0 auto;
   padding: 10px;
   background: #fff;
