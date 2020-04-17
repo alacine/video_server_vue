@@ -85,7 +85,7 @@ export default {
     load () {
       API.getVideoInfo(this.$route.params.vid).then((res) => {
         this.video = res
-        this.playerOptions.sources[0].src = '/stream/videos/' + this.video.id
+        this.playerOptions.sources[0].src = '/stream/video/' + this.video.id
       }).catch((res) => {
         this.$notify({
           title: '获取视频资源异常',

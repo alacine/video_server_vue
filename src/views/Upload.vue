@@ -5,12 +5,22 @@
       <el-form-item label="视频标题">
         <el-input v-model="form.title"></el-input>
       </el-form-item>
+
       <el-form-item label="视频简介">
         <el-input type="textarea" v-model="form.description"></el-input>
       </el-form-item>
+
+      <el-form-item label="视频">
+        <el-upload class="upload-demo" action="/stream/video"
+          :before-upload="vBeforeUpload" multiple
+          :limit="1" :on-exceed="handleExceed">
+          <el-button size="small" type="primary">点击上传</el-button>
+          <div slot="tip" class="el-upload__tip">只能上传MP4文件，且请您自行压缩</div>
+        </el-upload>
+      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" @click="onSubmit" :disabled="locked">确定投稿</el-button>
-        <el-button>取消</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -34,7 +44,7 @@ export default {
     onSubmit () {
       this.locked = true
       console.log('submit!')
-      API.uploadVideo(this.form).then((res) => {
+      API.postVideoInfo(this.form).then((res) => {
         this.$notify({
           title: '投稿成功',
           message: `您投稿的 ID 为 ${res.id}`,
@@ -43,12 +53,28 @@ export default {
       }).catch((res) => {
         // https://github.com/axios/axios/issues/960#issuecomment-309287911
         this.$notify.error({
-          title: '投稿失败',
-          message: `Code: ${res.response.data.error_code}; ${res.response.data.error}`
+          title: `Code: ${res.response.data.error_code}`,
+          message: `${res.response.data.error}`
         })
+        console.log(res)
       }).finally((res) => {
         this.locked = false
       })
+    },
+    vBeforeUpload (file) {
+      console.log(file.name)
+      const isMP4 = file.type === 'video/mp4'
+      if (!isMP4) {
+        this.$notify({
+          title: '视频格式有误',
+          message: '上传视频只能是 mp4 格式!',
+          type: 'warning'
+        })
+      }
+      return isMP4
+    },
+    handleExceed (files) {
+      this.$message.warning('仅可上传一个视频')
     }
   }
 }

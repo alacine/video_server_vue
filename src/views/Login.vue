@@ -22,7 +22,7 @@
 
 <!-- <script src="http://static.geetest.com/static/tools/gt.js"></script> -->
 <script>
-import * as API from '@/api/login'
+import * as API from '@/api/user'
 export default {
   name: 'Login',
   data () {
@@ -44,6 +44,7 @@ export default {
         })
         this.$cookies.set('X-Session-Id', res.session_id, 30)
         this.$cookies.set('X-User-Name', this.form.user_name, 30)
+        console.log(document.cookie)
         // 跳转首页
         this.$router.push({
           name: 'Home'
@@ -53,6 +54,7 @@ export default {
           title: '登录失败',
           message: `Code: ${res.response.data.error_code}; ${res.response.data.error}`
         })
+        console.log(res)
       })
     },
     onRegister () {

@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import * as API from '@/api/login'
+import * as API from '@/api/user'
 export default {
   name: 'Register',
   data () {
