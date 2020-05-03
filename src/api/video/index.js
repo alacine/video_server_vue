@@ -6,6 +6,8 @@ const postVideoInfo = form => axios.post('/api/videos', form).then(res => res.da
 const getVideoComments = id => axios.get(`/api/videos/${id}/comments`).then(res => res.data)
 const postVideoComment = (id, content) => axios.post(`/api/videos/${id}/comments`, content).then(res => res.data)
 
+const getUserVideos = id => axios.get(`/api/users/${id}/videos`).then(res => res.data)
+
 const uploadVideo = (id, form) => axios.post(`/stream/videos/${id}`, form).then(res => res.data)
 
 export {
@@ -14,6 +16,8 @@ export {
   postVideoInfo,
   getVideoComments,
   postVideoComment,
+
+  getUserVideos,
 
   uploadVideo
 }

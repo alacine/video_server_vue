@@ -35,26 +35,30 @@ export default {
   },
   methods: {
     onSubmit () {
-      console.log(this.form)
       API.login(this.form).then((res) => {
-        this.$notify({
-          title: '登录成功',
-          message: 'success',
-          type: 'success'
-        })
-        this.$cookies.set('X-Session-Id', res.session_id, 30)
-        this.$cookies.set('X-User-Name', this.form.user_name, 30)
-        console.log(document.cookie)
-        // 跳转首页
-        this.$router.push({
-          name: 'Home'
-        })
-      }).catch((res) => {
+        if (res.success) {
+          this.$notify({
+            title: '登录成功',
+            message: 'success',
+            type: 'success'
+          })
+          this.$cookies.set('X-Session-Id', res.session_id, '5h')
+          this.$cookies.set('X-User-Id', res.user_id, '5h')
+          // 跳转首页
+          this.$router.push({
+            name: 'Home'
+          })
+        } else {
+          this.$notify.error({
+            title: '登陆失败',
+            message: '用户名或密码错误'
+          })
+        }
+      }).catch((error) => {
         this.$notify.error({
           title: '登录失败',
-          message: `Code: ${res.response.data.error_code}; ${res.response.data.error}`
+          message: error
         })
-        console.log(res)
       })
     },
     onRegister () {

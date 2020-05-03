@@ -11,8 +11,9 @@
       </el-form-item>
 
       <el-form-item label="视频">
-        <el-upload class="upload-demo" action="/stream/video"
+        <el-upload class="upload-demo" action="/stream/videos"
           :before-upload="vBeforeUpload" multiple
+          v-model="video_file"
           :limit="1" :on-exceed="handleExceed">
           <el-button size="small" type="primary">点击上传</el-button>
           <div slot="tip" class="el-upload__tip">只能上传MP4文件，且请您自行压缩</div>
@@ -45,6 +46,7 @@ export default {
       this.locked = true
       console.log('submit!')
       API.postVideoInfo(this.form).then((res) => {
+        this.vBeforeUpload(this.video_file)
         this.$notify({
           title: '投稿成功',
           message: `您投稿的 ID 为 ${res.id}`,

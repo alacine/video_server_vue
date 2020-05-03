@@ -73,8 +73,8 @@ export default {
       },
       inputComment: '',
       postContent: {
-        // TODO
-        author_id: 1,
+        /* https://stackoverflow.com/questions/45556209/getting-cookie-value-as-integer */
+        author_id: parseInt(this.$cookies.get('X-User-Id')),
         content: ''
       },
       comments: [],
@@ -114,6 +114,7 @@ export default {
           message: '',
           type: 'success'
         })
+        this.load()
       }).catch((res) => {
         this.$notify.error({
           title: '发布评论失败',
