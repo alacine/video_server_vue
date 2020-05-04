@@ -2,8 +2,8 @@
   <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" router>
     <el-menu-item index="/">首页</el-menu-item>
     <el-menu-item index="/upload">投稿</el-menu-item>
-    <el-menu-item index="/login" :style="{'display':showLogin}">登录</el-menu-item>
-    <el-menu-item index="/space" :style="{'display':showSpace}">个人中心</el-menu-item>
+    <el-menu-item index="/login">登录</el-menu-item>
+    <el-menu-item index="/space" @click.native="showSpace()">个人中心</el-menu-item>
     <el-menu-item index="/about">关于本站</el-menu-item>
   </el-menu>
 </template>
@@ -12,28 +12,26 @@
 export default {
   data () {
     return {
-      activeIndex: '1',
-      showLogin: 'list-item',
-      showSpace: 'none'
+      activeIndex: '1'
     }
   },
   methods: {
     load () {
       console.log('NavBar')
-      console.log(this.$cookies.get('X-Session-Id'))
-      if (this.$cookies.isKey('X-Session-Id') && this.$cookies.isKey('X-User-Id')) {
-        this.showSpace = 'list-item'
-        this.showLogin = 'none'
-      } else {
-        this.showSpace = 'none'
-        this.showLogin = 'list-item'
-      }
     },
     beforeMount () {
       this.load()
     },
     handleSelect (key, keyPath) {
       console.log(key, keyPath)
+    },
+    showSpace () {
+      this.$router.push({
+        name: 'Space',
+        params: {
+          uid: this.$cookies.get('X-User-Id')
+        }
+      })
     }
   }
 }

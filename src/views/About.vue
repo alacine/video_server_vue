@@ -2,13 +2,21 @@
   <div class="about">
     <div class="title">欢迎来到本站点</div>
     <div class="master-info">本网站由 <a href="https://github.com/alacine">alacine</a> 创建运营</div>
-    <div class="master-info">有很多的布局参考了<a href="http://www.xiaosiro.cn/"> siaosiro.cn </a> 这个站点</div>
+    <div class="master-info">有很多的布局和样式参考了<a href="http://www.xiaosiro.cn/"> siaosiro.cn </a> 这个站点</div>
     <div class="master-info">项目地址 <a href="https://github.com/alacine/video_server">后端(Go)</a> <a href="https://github.com/alacine/video_server_vue">前端(Vue)</a></div>
-    <div class="master-info">如果您有什么建议或者侵犯到您的权益，请邮件至ryanruirr@gmail.com</div>
+    <div class="master-info">如果您有什么建议或者侵犯到您的权益，请邮件至 ryanruirr@gmail.com</div>
     <div class="master-info"></div>
     <div class="block">
       <el-timeline>
-        <el-timeline-item timestamp="2019/9/19" placement="top">
+        <el-timeline-item timestamp="2020/5/4" placement="top">
+          <el-card>
+            <h4>v1.1</h4>
+            <p>登陆页面，个人中心页面，投稿页面</p>
+          </el-card>
+        </el-timeline-item>
+      </el-timeline>
+      <el-timeline>
+        <el-timeline-item timestamp="2020/2/29" placement="top">
           <el-card>
             <h4>v1.0</h4>
             <p>首页视频列表, 视频详情页</p>

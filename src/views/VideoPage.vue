@@ -96,7 +96,6 @@ export default {
       API.getVideoComments(this.$route.params.vid).then((res) => {
         this.comments = res.comments
       }).catch((res) => {
-        console.log(res)
         this.$notify({
           title: '获取视频评论异常',
           message: `Code: ${res.response.data.error_code}; ${res.response.data.error}`,

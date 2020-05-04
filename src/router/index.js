@@ -40,7 +40,7 @@ const routes = [
     component: () => import('../views/Register.vue')
   },
   {
-    path: '/space',
+    path: '/space/:uid',
     name: 'Space',
     component: () => import('../views/Space.vue')
   }
