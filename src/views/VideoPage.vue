@@ -4,7 +4,8 @@
       <div class="video-title">
         <h2>{{video.title}}</h2>
       </div>
-      <span class="video-ctime">投稿日期: {{video.display_ctime}}</span>
+      <span class="video-ctime">投稿日期: {{video.create_time}}</span>
+      <el-button v-if="this.video.author_id == this.$cookies.get('X-User-Id')" id="delete" @click="deleteVideo" type="danger">删除视频</el-button>
       <video-player
         class="video-player-box"
         :options="playerOptions">
@@ -39,7 +40,7 @@
       <div class="video-comments-list" v-for="comment in comments" :key="comment.id">
         <div class="comment-card">
           <div class="c-uavatar">
-            <el-avatar :size="50" :src="comment.user_url"></el-avatar>
+            <el-avatar :size="50" icon="el-icon-user-solid"></el-avatar>
           </div>
           <div class="c-name">{{comment.author_name}}</div>
           <div class="c-content">{{comment.content}}</div>
@@ -85,7 +86,7 @@ export default {
     load () {
       API.getVideoInfo(this.$route.params.vid).then((res) => {
         this.video = res
-        this.playerOptions.sources[0].src = '/stream/video/' + this.video.id
+        this.playerOptions.sources[0].src = '/stream/videos/' + this.video.id
       }).catch((res) => {
         this.$notify({
           title: '获取视频资源异常',
@@ -122,6 +123,21 @@ export default {
       }).finally((res) => {
         this.locked = false
       })
+    },
+    deleteVideo () {
+      console.log('delete video', this.video.id)
+      API.deleteVideo(this.video.id).then((res) => {
+        this.$notify({
+          title: '视频删除成功',
+          message: ''
+        })
+      }).catch((res) => {
+        this.$notify({
+          title: '删除失败',
+          message: `Code: ${res.response.data.error_code}; ${res.response.data.error}`,
+          type: 'warning'
+        })
+      })
     }
   },
   components: {
@@ -134,6 +150,11 @@ export default {
 </script>
 
 <style type="text/css">
+#delete {
+  float: right;
+  margin-top: -20px;
+}
+
 .video-title{
   font-size: 20px;
   color: #303133;

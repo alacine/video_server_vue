@@ -3,28 +3,28 @@
     <div class="h">
       <div class="h-info">
         <div class="h-avatar">
-          <el-avatar :size="65" :src="circleUrl"></el-avatar>
+          <el-avatar :size="65" icon="el-icon-user-solid"></el-avatar>
         </div>
         <div class="h-basic">
           <div id="h-name">{{uname}}</div>
           <div id="h-uid">UID:{{uid}}</div>
         </div>
-        <el-button id="exit" @click="logout" type="danger">退出登陆</el-button>
+        <el-button v-if="uid == this.$cookies.get('X-User-Id')" id="exit" @click="userExit" type="danger">退出登陆</el-button>
       </div>
     </div>
     <el-row :gutter="20">
       <el-col :span="4" v-for="video in videos" :key="video.id">
         <el-card class="video-cards" @click.native="playVideo(video)">
           <div>
-            <!-- <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"> -->
+            <img src="../assets/video.svg">
           </div>
           <div class="video-info">
             <div>
               <span class="video-title">{{video.title.substring(0,10)}}</span>
             </div>
-            <div class="bottom clearfix">
+            <!-- <div class="bottom clearfix">
               <span class="video-author_name">{{video.author_name.substring(0,10)}}</span>
-            </div>
+            </div> -->
             <div class="bottom clearfix">
               <span class="video-description">{{video.description}}</span>
             </div>
@@ -77,6 +77,23 @@ export default {
         params: {
           vid: video.id
         }
+      })
+    },
+    userExit () {
+      uAPI.logout().then((res) => {
+        this.$cookies.remove('X-Session-Id')
+        this.$cookies.remove('X-User-Id')
+        this.$notify({
+          title: '退出成功',
+          message: '',
+          type: 'success'
+        })
+      }).catch((res) => {
+        this.$notify({
+          title: '退出失败',
+          message: '用户未登录',
+          type: 'warning'
+        })
       })
     }
   },

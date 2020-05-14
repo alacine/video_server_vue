@@ -8,6 +8,14 @@
     <div class="master-info"></div>
     <div class="block">
       <el-timeline>
+        <el-timeline-item timestamp="2020/5/14" placement="top">
+          <el-card>
+            <h4>v1.2</h4>
+            <p>可以上传视频了，新增删除视频功能</p>
+          </el-card>
+        </el-timeline-item>
+      </el-timeline>
+      <el-timeline>
         <el-timeline-item timestamp="2020/5/4" placement="top">
           <el-card>
             <h4>v1.1</h4>

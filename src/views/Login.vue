@@ -34,6 +34,13 @@ export default {
     }
   },
   methods: {
+    load () {
+      if (this.$cookies.get('X-Session-Id') && this.$cookies.get('X-User-Id')) {
+        console.log('yes')
+        return false
+      }
+      return true
+    },
     onSubmit () {
       API.login(this.form).then((res) => {
         if (res.success) {

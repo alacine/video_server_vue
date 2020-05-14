@@ -7,8 +7,7 @@ const getVideoComments = id => axios.get(`/api/videos/${id}/comments`).then(res 
 const postVideoComment = (id, content) => axios.post(`/api/videos/${id}/comments`, content).then(res => res.data)
 
 const getUserVideos = id => axios.get(`/api/users/${id}/videos`).then(res => res.data)
-
-const uploadVideo = (id, form) => axios.post(`/stream/videos/${id}`, form).then(res => res.data)
+const deleteVideo = vid => axios.delete(`/api/videos/${vid}`).then(res => res.data)
 
 export {
   getVideos,
@@ -16,8 +15,6 @@ export {
   postVideoInfo,
   getVideoComments,
   postVideoComment,
-
   getUserVideos,
-
-  uploadVideo
+  deleteVideo
 }

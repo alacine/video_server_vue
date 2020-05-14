@@ -10,18 +10,17 @@
         <el-input type="textarea" v-model="form.description"></el-input>
       </el-form-item>
 
-      <el-form-item label="视频">
-        <el-upload class="upload-demo" action="/stream/videos"
-          :before-upload="vBeforeUpload" multiple
-          v-model="video_file"
-          :limit="1" :on-exceed="handleExceed">
-          <el-button size="small" type="primary">点击上传</el-button>
-          <div slot="tip" class="el-upload__tip">只能上传MP4文件，且请您自行压缩</div>
-        </el-upload>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit" :disabled="!this.locked">创建视频信息</el-button>
       </el-form-item>
 
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit" :disabled="locked">确定投稿</el-button>
+      <el-form-item label="视频">
+        <el-upload class="upload-demo" :action="this.uploadUrl"
+          :before-upload="vBeforeUpload" multiple
+          :limit="1" :on-exceed="handleExceed" :disabled="this.locked">
+          <el-button size="small" type="primary" :disabled="this.locked">点击上传</el-button>
+          <div slot="tip" class="el-upload__tip">只能上传mp4文件，且请您自行压缩，最大为 250 MB</div>
+        </el-upload>
       </el-form-item>
     </el-form>
   </div>
@@ -32,26 +31,27 @@ import * as API from '@/api/video'
 export default {
   data () {
     return {
-      locked: false,
+      locked: true,
       form: {
         title: '',
         description: '',
         // TODO
         author_id: 1
-      }
+      },
+      uploadUrl: '/stream/videos/'
     }
   },
   methods: {
     onSubmit () {
-      this.locked = true
-      console.log('submit!')
       API.postVideoInfo(this.form).then((res) => {
-        this.vBeforeUpload(this.video_file)
         this.$notify({
-          title: '投稿成功',
-          message: `您投稿的 ID 为 ${res.id}`,
+          title: '创建视频信息成功',
+          message: `您的视频 ID 将会是 ${res.id}，可以上传视频了`,
           type: 'success'
         })
+        this.uploadUrl += res.id
+        console.log(this.uploadUrl)
+        this.locked = false
       }).catch((res) => {
         // https://github.com/axios/axios/issues/960#issuecomment-309287911
         this.$notify.error({
@@ -59,11 +59,18 @@ export default {
           message: `${res.response.data.error}`
         })
         console.log(res)
-      }).finally((res) => {
-        this.locked = false
+        this.locked = true
       })
     },
     vBeforeUpload (file) {
+      if (this.newVideoId === 0) {
+        this.$notify({
+          title: '无法上传',
+          message: '请先创建视频信息',
+          type: 'warning'
+        })
+        return false
+      }
       console.log(file.name)
       const isMP4 = file.type === 'video/mp4'
       if (!isMP4) {

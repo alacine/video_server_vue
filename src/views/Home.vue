@@ -3,9 +3,7 @@
     <el-row :gutter="20">
       <el-col :span="4" v-for="video in videos" :key="video.id">
         <el-card class="video-cards" @click.native="playVideo(video)">
-          <div>
-            <!-- <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"> -->
-          </div>
+          <img src="../assets/video.svg">
           <div class="video-info">
             <div>
               <span class="video-title">{{video.title.substring(0,10)}}</span>
@@ -64,6 +62,10 @@ export default {
 </script>
 
 <style type="text/css">
+.video-surface {
+  margin-right: 30px;
+}
+
 .video-title{
   font-size: 15px;
 }
@@ -91,6 +93,7 @@ export default {
 .image {
   width: 100%;
   display: block;
+  float: left;
 }
 
 .clearfix:before,
