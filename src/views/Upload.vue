@@ -50,7 +50,6 @@ export default {
           type: 'success'
         })
         this.uploadUrl += res.id
-        console.log(this.uploadUrl)
         this.locked = false
       }).catch((res) => {
         // https://github.com/axios/axios/issues/960#issuecomment-309287911
@@ -58,7 +57,6 @@ export default {
           title: `Code: ${res.response.data.error_code}`,
           message: `${res.response.data.error}`
         })
-        console.log(res)
         this.locked = true
       })
     },
@@ -71,7 +69,6 @@ export default {
         })
         return false
       }
-      console.log(file.name)
       const isMP4 = file.type === 'video/mp4'
       if (!isMP4) {
         this.$notify({

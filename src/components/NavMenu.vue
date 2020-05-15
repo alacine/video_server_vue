@@ -17,13 +17,11 @@ export default {
   },
   methods: {
     load () {
-      console.log('NavBar')
     },
     beforeMount () {
       this.load()
     },
     handleSelect (key, keyPath) {
-      console.log(key, keyPath)
     },
     showSpace () {
       this.$router.push({

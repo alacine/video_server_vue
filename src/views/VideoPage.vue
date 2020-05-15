@@ -106,7 +106,6 @@ export default {
     },
     onSubmit () {
       this.locked = true
-      console.log('submit!')
       this.postContent.content = this.inputComment
       API.postVideoComment(this.video.id, this.postContent).then((res) => {
         this.$notify({
@@ -125,7 +124,6 @@ export default {
       })
     },
     deleteVideo () {
-      console.log('delete video', this.video.id)
       API.deleteVideo(this.video.id).then((res) => {
         this.$notify({
           title: '视频删除成功',
