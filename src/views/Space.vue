@@ -66,7 +66,7 @@ export default {
       }).catch((res) => {
         this.$notify({
           title: '获取用户信息异常',
-          message: '用户不存在',
+          message: '用户未登陆',
           type: 'warning'
         })
       })
