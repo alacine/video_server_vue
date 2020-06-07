@@ -36,7 +36,7 @@ export default {
         title: '',
         description: '',
         // TODO
-        author_id: 1
+        author_id: parseInt(this.$cookies.get('X-User-Id'))
       },
       uploadUrl: '/stream/videos/'
     }
