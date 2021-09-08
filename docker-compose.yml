@@ -1,0 +1,19 @@
+services:
+  vue:
+    build:
+      context: .
+    image: video_server_vue
+    #container_name: video_server_vue
+    networks:
+      video_server:
+        ipv4_address: 172.50.0.6
+
+networks:
+  video_server:
+    name: video_server
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.50.0.0/16
+          ip_range: 172.50.0.0/24
+          gateway: 172.50.0.1
